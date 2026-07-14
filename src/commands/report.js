@@ -6,7 +6,8 @@ import { parseFile } from '../ingest.js';
 import { loadDataset } from '../model.js';
 import { analyze } from '../advisor.js';
 import { insights } from '../insights.js';
-import { renderReport, renderInsights } from '../report.js';
+import { narrate } from '../narrative.js';
+import { renderReport, renderInsights, renderNarrative } from '../report.js';
 import { normalizeRate } from '../money.js';
 
 function optValue(args, name) {
@@ -40,13 +41,16 @@ export default async function report(args) {
 
   const analysis = analyze(dataset);
   const ins = insights(dataset);
+  const story = narrate(analysis, ins);
 
   if (args.includes('--json')) {
-    console.log(JSON.stringify({ ...analysis, insights: ins }, null, 2));
+    console.log(JSON.stringify({ ...analysis, insights: ins, narrative: story }, null, 2));
     return 0;
   }
   console.log(renderReport(analysis));
   console.log('');
   console.log(renderInsights(ins));
+  console.log('');
+  console.log(renderNarrative(story));
   return 0;
 }

@@ -16,9 +16,9 @@ for accountants, not for the "what's really mine" question. One Desk fills that 
 
 ## Status
 
-**M2 — categorization, recurring detection, and anomaly flags, shipped.** On top of the M1
-advisor, `onedesk report` now shows where the money goes, which charges repeat, and what looks
-off. 44 tests, pure functions, zero runtime dependencies.
+**M3 — advisor narrative + monthly report, shipped.** `onedesk report` now ends with
+plain-language guidance ("you can safely pay yourself $X…"), and `onedesk monthly` gives a
+per-month business/personal breakdown. 50 tests, pure functions, zero runtime dependencies.
 
 - [x] **M1** — money core + advisor (`onedesk report`): transaction model, personal/business
       split, tax set-aside, safe-to-pay-yourself, and runway. Pure functions, `node:test`,
@@ -27,7 +27,8 @@ off. 44 tests, pure functions, zero runtime dependencies.
       repeating charges (subscriptions/salary/rent) as monthly or irregular streams, and three
       anomaly checks — business-expense-in-a-personal-account, category spikes, and outsized
       one-off expenses. Tuned for low false positives.
-- [ ] **M3** — advisor narrative + monthly report (plain-language guidance)
+- [x] **M3** — advisor narrative (`report` GUIDANCE/WATCH sections: deterministic plain-language
+      advice, no LLM) + `onedesk monthly` per-month breakdown with top categories.
 - [ ] **M4** — bank-CSV import adapters + local file store
 - [ ] **M5** — thin local UI (deferred; hosting/deploy is not automated)
 
@@ -62,8 +63,11 @@ business charge filed under personal, a dining spike, and outsized one-off expen
 
 ```
 node bin/onedesk.js help
-node bin/onedesk.js report [transactions.json]   # the advisor report (M1)
+node bin/onedesk.js report  [transactions.json]  # money answers + spend + recurring + anomalies + guidance
+node bin/onedesk.js monthly [transactions.json]  # per-month business/personal breakdown
 ```
+
+Add `--json` for raw output, `--tax <rate>` / `--buffer <months>` to override assumptions.
 
 Node ≥ 18. No runtime dependencies; the core runs fully offline. Your financial data
 never leaves your machine.

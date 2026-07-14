@@ -61,3 +61,40 @@ export function renderInsights(ins) {
   }
   return L.join('\n');
 }
+
+// M3: plain-language guidance from narrate().
+export function renderNarrative(n) {
+  const L = ['  GUIDANCE'];
+  for (const g of n.guidance) L.push(`    - ${g}`);
+  if (n.flow.length) {
+    L.push('');
+    for (const f of n.flow) L.push(`    - ${f}`);
+  }
+  if (n.watch.length) {
+    L.push('');
+    L.push('  WATCH');
+    for (const w of n.watch) L.push(`    - ${w}`);
+  }
+  return L.join('\n');
+}
+
+// M3: per-month breakdown from monthlyBreakdown().
+export function renderMonthly(rows) {
+  const L = ['ONE DESK - monthly breakdown', ''];
+  if (!rows.length) {
+    L.push('  (no transactions)');
+    return L.join('\n');
+  }
+  for (const r of rows) {
+    L.push(`  ${r.month}`);
+    L.push(`    business    in ${fmtCents(r.business.inCents)}   out ${fmtCents(r.business.outCents)}   net ${fmtCents(r.business.net)}`);
+    L.push(`    personal    in ${fmtCents(r.personal.inCents)}   out ${fmtCents(r.personal.outCents)}   net ${fmtCents(r.personal.net)}`);
+    if (r.unclassified.inCents || r.unclassified.outCents) {
+      L.push(`    unclassified   in ${fmtCents(r.unclassified.inCents)}   out ${fmtCents(r.unclassified.outCents)}`);
+    }
+    if (r.topCategories.length) {
+      L.push(`    top spend: ${r.topCategories.map((c) => `${c.category} ${fmtCents(c.outCents)}`).join(', ')}`);
+    }
+  }
+  return L.join('\n');
+}

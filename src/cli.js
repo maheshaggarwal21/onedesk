@@ -3,16 +3,20 @@
 // milestones behind this same dispatch.
 
 import report from './commands/report.js';
+import monthly from './commands/monthly.js';
 
 const COMMANDS = {
-  report
+  report,
+  monthly
 };
 
 function help() {
   console.log('onedesk - a personal + business money engine & advisor\n');
-  console.log('  onedesk report [file]   safe-to-pay-yourself, tax set-aside, and runway');
-  console.log('                          file: transactions JSON or CSV (default: transactions.json)');
-  console.log('                          flags: --json  --tax <rate>  --buffer <months>');
+  console.log('  onedesk report [file]    safe-to-pay-yourself, tax set-aside, runway, spend,');
+  console.log('                           recurring, anomalies, and plain-language guidance');
+  console.log('  onedesk monthly [file]   per-month business/personal breakdown + top categories');
+  console.log('                           file: transactions JSON or CSV (default: transactions.json)');
+  console.log('                           flags: --json  --tax <rate>  --buffer <months>');
   console.log('\nNode >= 18, zero runtime dependencies, runs fully offline.');
 }
 
