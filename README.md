@@ -16,13 +16,17 @@ for accountants, not for the "what's really mine" question. One Desk fills that 
 
 ## Status
 
-**M1 — money core + advisor, shipped.** `onedesk report` answers the three questions over a
-transactions file (JSON or CSV). 28 tests, pure functions, zero runtime dependencies.
+**M2 — categorization, recurring detection, and anomaly flags, shipped.** On top of the M1
+advisor, `onedesk report` now shows where the money goes, which charges repeat, and what looks
+off. 44 tests, pure functions, zero runtime dependencies.
 
 - [x] **M1** — money core + advisor (`onedesk report`): transaction model, personal/business
       split, tax set-aside, safe-to-pay-yourself, and runway. Pure functions, `node:test`,
       CLI over a JSON/CSV file.
-- [ ] **M2** — categorization + recurring detection + anomaly flags
+- [x] **M2** — categorization + recurring detection + anomaly flags: spend by category,
+      repeating charges (subscriptions/salary/rent) as monthly or irregular streams, and three
+      anomaly checks — business-expense-in-a-personal-account, category spikes, and outsized
+      one-off expenses. Tuned for low false positives.
 - [ ] **M3** — advisor narrative + monthly report (plain-language guidance)
 - [ ] **M4** — bank-CSV import adapters + local file store
 - [ ] **M5** — thin local UI (deferred; hosting/deploy is not automated)
@@ -43,6 +47,16 @@ ONE DESK - money report
 
 Every headline number shows the assumption behind it, and transactions it can't confidently
 place as business or personal are flagged, not silently folded into the math.
+
+The same report also breaks down spend by category, lists recurring charges, and raises
+anomaly flags. Try `onedesk report examples/sample-messy.json` to see the flags fire — a
+business charge filed under personal, a dining spike, and outsized one-off expenses:
+
+```
+  ANOMALIES
+    [medium] "Client project software license" reads like a business item but is filed under personal.
+    [medium] dining spending was 445% higher in 2026-06 than the prior-month average.
+```
 
 ## Usage
 

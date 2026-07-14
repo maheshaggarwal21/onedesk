@@ -1,0 +1,20 @@
+{
+  "asOf": "2026-06-30",
+  "taxRate": 0.25,
+  "bufferMonths": 3,
+  "openingBalance": { "business": 5000, "personal": 1000 },
+  "transactions": [
+    { "date": "2026-04-05", "amount": 4000, "scope": "business", "description": "Client retainer" },
+    { "date": "2026-04-06", "amount": -1200, "scope": "personal", "description": "Client project software license" },
+    { "date": "2026-04-10", "amount": -100, "description": "Dining out" },
+    { "date": "2026-04-15", "amount": -15, "scope": "personal", "description": "Spotify" },
+
+    { "date": "2026-05-05", "amount": 4000, "scope": "business", "description": "Client retainer" },
+    { "date": "2026-05-10", "amount": -120, "description": "Dining out" },
+    { "date": "2026-05-15", "amount": -15, "scope": "personal", "description": "Spotify" },
+
+    { "date": "2026-06-05", "amount": 4000, "scope": "business", "description": "Client retainer" },
+    { "date": "2026-06-10", "amount": -600, "description": "Dining out" },
+    { "date": "2026-06-15", "amount": -15, "scope": "personal", "description": "Spotify" }
+  ]
+}

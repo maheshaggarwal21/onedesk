@@ -5,7 +5,8 @@ import { existsSync } from 'node:fs';
 import { parseFile } from '../ingest.js';
 import { loadDataset } from '../model.js';
 import { analyze } from '../advisor.js';
-import { renderReport } from '../report.js';
+import { insights } from '../insights.js';
+import { renderReport, renderInsights } from '../report.js';
 import { normalizeRate } from '../money.js';
 
 function optValue(args, name) {
@@ -38,11 +39,14 @@ export default async function report(args) {
   if (buffer != null && Number.isFinite(Number(buffer))) dataset.bufferMonths = Number(buffer);
 
   const analysis = analyze(dataset);
+  const ins = insights(dataset);
 
   if (args.includes('--json')) {
-    console.log(JSON.stringify(analysis, null, 2));
+    console.log(JSON.stringify({ ...analysis, insights: ins }, null, 2));
     return 0;
   }
   console.log(renderReport(analysis));
+  console.log('');
+  console.log(renderInsights(ins));
   return 0;
 }

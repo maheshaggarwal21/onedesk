@@ -33,3 +33,31 @@ export function renderReport(a) {
   }
   return L.join('\n');
 }
+
+// M2: categories, recurring streams, and anomaly flags.
+export function renderInsights(ins) {
+  const L = [];
+  const top = ins.categories.filter((c) => c.outCents > 0).slice(0, 6);
+  if (top.length) {
+    L.push('  SPEND BY CATEGORY (top)');
+    for (const c of top) L.push(`    ${c.category.padEnd(14)} ${fmtCents(c.outCents)}   (${c.count} txn${c.count === 1 ? '' : 's'})`);
+  }
+
+  if (ins.recurring.length) {
+    L.push('');
+    L.push('  RECURRING');
+    for (const r of ins.recurring) {
+      const arrow = r.direction === 'in' ? '+' : '-';
+      L.push(`    ${arrow}${fmtCents(r.typicalCents)}  ${r.label} (${r.scope}, ${r.cadence}, ${r.occurrences}x)`);
+    }
+  }
+
+  L.push('');
+  if (ins.anomalies.length) {
+    L.push('  ANOMALIES');
+    for (const a of ins.anomalies) L.push(`    [${a.severity}] ${a.detail}`);
+  } else {
+    L.push('  ANOMALIES: none flagged');
+  }
+  return L.join('\n');
+}
