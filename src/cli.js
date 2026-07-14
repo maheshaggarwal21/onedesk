@@ -1,27 +1,30 @@
-// One Desk CLI. This is the M0 scaffold — the M1 build (money core + advisor)
-// wires real commands here. Kept deliberately thin so `onedesk` runs today and
-// the next task fills in the finance engine behind these verbs.
+// One Desk CLI. M1 wires the `report` command (money engine + advisor) over a
+// transactions file. More verbs (import, categorize, monthly) arrive in later
+// milestones behind this same dispatch.
+
+import report from './commands/report.js';
 
 const COMMANDS = {
-  report: async () => {
-    console.log('One Desk — scaffold in place. M1 (money core + advisor) is the next build.');
-    return 0;
-  }
+  report
 };
+
+function help() {
+  console.log('onedesk - a personal + business money engine & advisor\n');
+  console.log('  onedesk report [file]   safe-to-pay-yourself, tax set-aside, and runway');
+  console.log('                          file: transactions JSON or CSV (default: transactions.json)');
+  console.log('                          flags: --json  --tax <rate>  --buffer <months>');
+  console.log('\nNode >= 18, zero runtime dependencies, runs fully offline.');
+}
 
 export async function run(argv) {
   const [cmd = 'help'] = argv;
-
   if (cmd === 'help' || cmd === '--help' || cmd === '-h') {
-    console.log('onedesk — a personal + business money engine & advisor\n');
-    console.log('  onedesk report [transactions.json]   safe-to-pay-yourself, tax set-aside, runway  (M1, coming)');
-    console.log('\nStatus: M0 scaffold. Node >= 18, zero runtime dependencies, runs offline.');
+    help();
     return 0;
   }
-
   const fn = COMMANDS[cmd];
   if (!fn) {
-    console.error(`onedesk: unknown command "${cmd}" — try \`onedesk help\``);
+    console.error(`onedesk: unknown command "${cmd}" - try \`onedesk help\``);
     return 1;
   }
   return fn(argv.slice(1));

@@ -1,0 +1,25 @@
+{
+  "asOf": "2026-06-30",
+  "taxRate": 0.25,
+  "bufferMonths": 3,
+  "openingBalance": { "business": 8000, "personal": 2500 },
+  "transactions": [
+    { "date": "2026-04-05", "amount": 6000, "scope": "business", "category": "income", "description": "Client A invoice" },
+    { "date": "2026-04-10", "amount": -300, "scope": "business", "category": "hosting", "description": "AWS" },
+    { "date": "2026-04-20", "amount": -99, "description": "SaaS subscription license" },
+    { "date": "2026-04-02", "amount": -1500, "scope": "personal", "category": "housing", "description": "Rent" },
+    { "date": "2026-04-03", "amount": -600, "description": "Groceries" },
+    { "date": "2026-04-25", "amount": -50, "description": "Netflix and Spotify" },
+
+    { "date": "2026-05-06", "amount": 4500, "scope": "business", "category": "income", "description": "Client B retainer" },
+    { "date": "2026-05-10", "amount": -300, "scope": "business", "category": "hosting", "description": "AWS" },
+    { "date": "2026-05-15", "amount": -1200, "description": "Contractor payment" },
+    { "date": "2026-05-03", "amount": -600, "description": "Groceries" },
+    { "date": "2026-05-20", "amount": -400, "description": "ATM withdrawal" },
+
+    { "date": "2026-06-04", "amount": 7000, "scope": "business", "category": "income", "description": "Client A invoice" },
+    { "date": "2026-06-10", "amount": -300, "scope": "business", "category": "hosting", "description": "AWS" },
+    { "date": "2026-06-12", "amount": -99, "description": "SaaS subscription license" },
+    { "date": "2026-06-03", "amount": -600, "description": "Groceries" }
+  ]
+}
