@@ -6,3 +6,6 @@ node_modules/
 .DS_Store
 coverage/
 *.tmp
+*.tmp-*
+onedesk-ledger.json
+*.ledger.json

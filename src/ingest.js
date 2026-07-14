@@ -13,7 +13,7 @@ export function parseFile(path) {
 }
 
 // Split one CSV line into fields, respecting quotes and "" escapes.
-function splitCsvLine(line) {
+export function splitCsvLine(line) {
   const out = [];
   let field = '';
   let inQuotes = false;

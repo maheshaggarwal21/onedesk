@@ -16,9 +16,9 @@ for accountants, not for the "what's really mine" question. One Desk fills that 
 
 ## Status
 
-**M3 — advisor narrative + monthly report, shipped.** `onedesk report` now ends with
-plain-language guidance ("you can safely pay yourself $X…"), and `onedesk monthly` gives a
-per-month business/personal breakdown. 50 tests, pure functions, zero runtime dependencies.
+**M4 — bank-CSV import + local ledger, shipped.** `onedesk import` pulls a real bank/spreadsheet
+CSV export into a local JSON ledger (de-duplicating re-imports), and every other command reads
+that ledger. 61 tests, pure functions, zero runtime dependencies, data stays on your machine.
 
 - [x] **M1** — money core + advisor (`onedesk report`): transaction model, personal/business
       split, tax set-aside, safe-to-pay-yourself, and runway. Pure functions, `node:test`,
@@ -29,7 +29,9 @@ per-month business/personal breakdown. 50 tests, pure functions, zero runtime de
       one-off expenses. Tuned for low false positives.
 - [x] **M3** — advisor narrative (`report` GUIDANCE/WATCH sections: deterministic plain-language
       advice, no LLM) + `onedesk monthly` per-month breakdown with top categories.
-- [ ] **M4** — bank-CSV import adapters + local file store
+- [x] **M4** — `onedesk import`: bank-CSV adapters (aliased headers, debit/credit or signed
+      amount, mdy/dmy/ymd dates, accounting negatives) into a de-duplicated local JSON ledger,
+      written atomically. The ledger is itself a dataset, so `report`/`monthly` read it directly.
 - [ ] **M5** — thin local UI (deferred; hosting/deploy is not automated)
 
 ## Example
@@ -63,11 +65,15 @@ business charge filed under personal, a dining spike, and outsized one-off expen
 
 ```
 node bin/onedesk.js help
-node bin/onedesk.js report  [transactions.json]  # money answers + spend + recurring + anomalies + guidance
-node bin/onedesk.js monthly [transactions.json]  # per-month business/personal breakdown
+node bin/onedesk.js import  bank.csv --store ledger.json   # merge a bank export into a local ledger
+node bin/onedesk.js report  ledger.json                    # money answers + spend + recurring + anomalies + guidance
+node bin/onedesk.js monthly ledger.json                    # per-month business/personal breakdown
 ```
 
-Add `--json` for raw output, `--tax <rate>` / `--buffer <months>` to override assumptions.
+Import auto-detects common bank columns and handles debit/credit or signed amounts; pass
+`--date-format mdy|dmy|ymd` for slash dates. Imported rows have no business/personal scope yet —
+set `"scope"` in the ledger for accurate splits. Add `--json` for raw output, `--tax <rate>` /
+`--buffer <months>` to override assumptions.
 
 Node ≥ 18. No runtime dependencies; the core runs fully offline. Your financial data
 never leaves your machine.
