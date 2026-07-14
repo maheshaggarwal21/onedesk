@@ -16,13 +16,12 @@ for accountants, not for the "what's really mine" question. One Desk fills that 
 
 ## Status
 
-**M4 — bank-CSV import + local ledger, shipped.** `onedesk import` pulls a real bank/spreadsheet
-CSV export into a local JSON ledger (de-duplicating re-imports), and every other command reads
-that ledger. 61 tests, pure functions, zero runtime dependencies, data stays on your machine.
+**v1 — all five milestones shipped.** From a transactions file or a bank CSV to money answers,
+spend/recurring/anomaly insights, plain-language guidance, and a static HTML dashboard. 64 tests,
+pure functions, zero runtime dependencies, everything runs offline and stays on your machine.
 
 - [x] **M1** — money core + advisor (`onedesk report`): transaction model, personal/business
-      split, tax set-aside, safe-to-pay-yourself, and runway. Pure functions, `node:test`,
-      CLI over a JSON/CSV file.
+      split, tax set-aside, safe-to-pay-yourself, and runway. Pure functions, `node:test`.
 - [x] **M2** — categorization + recurring detection + anomaly flags: spend by category,
       repeating charges (subscriptions/salary/rent) as monthly or irregular streams, and three
       anomaly checks — business-expense-in-a-personal-account, category spikes, and outsized
@@ -32,7 +31,8 @@ that ledger. 61 tests, pure functions, zero runtime dependencies, data stays on 
 - [x] **M4** — `onedesk import`: bank-CSV adapters (aliased headers, debit/credit or signed
       amount, mdy/dmy/ymd dates, accounting negatives) into a de-duplicated local JSON ledger,
       written atomically. The ledger is itself a dataset, so `report`/`monthly` read it directly.
-- [ ] **M5** — thin local UI (deferred; hosting/deploy is not automated)
+- [x] **M5** — `onedesk html`: a self-contained, theme-aware static HTML dashboard (all
+      user-supplied text HTML-escaped). No server, no deploy — a file you open in your browser.
 
 ## Example
 
@@ -68,6 +68,7 @@ node bin/onedesk.js help
 node bin/onedesk.js import  bank.csv --store ledger.json   # merge a bank export into a local ledger
 node bin/onedesk.js report  ledger.json                    # money answers + spend + recurring + anomalies + guidance
 node bin/onedesk.js monthly ledger.json                    # per-month business/personal breakdown
+node bin/onedesk.js html    ledger.json --out report.html  # static HTML dashboard (opens from disk)
 ```
 
 Import auto-detects common bank columns and handles debit/credit or signed amounts; pass
