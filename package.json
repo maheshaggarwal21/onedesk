@@ -1,0 +1,17 @@
+{
+  "name": "onedesk",
+  "version": "0.0.1",
+  "description": "A personal + business money engine and advisor: know what is really yours to spend, how much you can safely pay yourself, and how long your runway is.",
+  "type": "module",
+  "bin": {
+    "onedesk": "bin/onedesk.js"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "author": "Mahesh Aggarwal"
+}
